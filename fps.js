@@ -8,7 +8,7 @@ function apecx_get_host_name(e) {
 }
 
 function apecx_base64_encode(e) {
-    return btoa(encodeURIComponent(e).replace(/%([0-9A-F]{2})/g, function (e, n) {
+    return btoa(encodeURIComponent(e).replace(/%([0-9A-F]{2})/g, function(e, n) {
         return String.fromCharCode("0x" + n)
     }))
 }
@@ -20,28 +20,26 @@ function apecx_get_wildcard_domains(e) {
 }
 
 function apecx_match_wildcard_domain(e, n) {
-    var l = apecx_get_wildcard_domains(e);
-    for (i = 0; i < l.length; i++)
-        if (n.substr(-1 * l[i].length) === l[i]) return !0;
+    var t = apecx_get_wildcard_domains(e);
+    for (i = 0; i < t.length; i++)
+        if (n.substr(-1 * t[i].length) === t[i]) return !0;
     return !1
 }
 
 function apecx_domain_exist(e, n) {
-    return e.indexOf(n) > -1 || apecx_match_wildcard_domain(e, n)
+    return -1 < e.indexOf(n) || apecx_match_wildcard_domain(e, n)
 }
-
-document.addEventListener("DOMContentLoaded", function (e) {
+document.addEventListener("DOMContentLoaded", function(e) {
     if ("undefined" != typeof apecx_url && "undefined" != typeof apecx_api_token) {
-        var l = document.getElementsByTagName("a");
+        var n = document.getElementsByTagName("a");
         if ("undefined" == typeof apecx_domains)
-            if ("undefined" == typeof apecx_exclude_domains) ;
+            if ("undefined" == typeof apecx_exclude_domains);
             else
-                for (t = 0; t < l.length; t++) {
-                    (a = apecx_get_host_name(l[t].getAttribute("href"))).length > 0 && !1 === apecx_domain_exist(apecx_exclude_domains, a) ? l[t].href = apecx_url + "full/?key=" + encodeURIComponent(apecx_api_token) + "&url=" + apecx_base64_encode(l[t].href) : "magnet:" === l[t].protocol && (l[t].href = apecx_url + "full/?key=" + encodeURIComponent(apecx_api_token) + "&url=" + apecx_base64_encode(l[t].href))
-                } else
-            for (var t = 0; t < l.length; t++) {
+                for (t = 0; t < n.length; t++) 0 < (a = apecx_get_host_name(n[t].getAttribute("href"))).length && !1 === apecx_domain_exist(apecx_exclude_domains, a) ? (n[t].href = apecx_url + "full/?key=" + encodeURIComponent(apecx_api_token) + "&url=" + apecx_base64_encode(n[t].href), n[t].rel = '') : "magnet:" === n[t].protocol && (n[t].href = apecx_url + "full/?key=" + encodeURIComponent(apecx_api_token) + "&url=" + apecx_base64_encode(n[t].href), n[t].rel = '');
+        else
+            for (var t = 0; t < n.length; t++) {
                 var a;
-                (a = apecx_get_host_name(l[t].getAttribute("href"))).length > 0 && apecx_domain_exist(apecx_domains, a) ? l[t].href = apecx_url + "full/?key=" + encodeURIComponent(apecx_api_token) + "&url=" + apecx_base64_encode(l[t].href) : "magnet:" === l[t].protocol && (l[t].href = apecx_url + "full/?key=" + encodeURIComponent(apecx_api_token) + "&url=" + apecx_base64_encode(l[t].href))
+                0 < (a = apecx_get_host_name(n[t].getAttribute("href"))).length && apecx_domain_exist(apecx_domains, a) ? ( n[t].href = apecx_url + "full/?key=" + encodeURIComponent(apecx_api_token) + "&url=" + apecx_base64_encode(n[t].href), n[t].rel = '' ) : "magnet:" === n[t].protocol && (n[t].href = apecx_url + "full/?key=" + encodeURIComponent(apecx_api_token) + "&url=" + apecx_base64_encode(n[t].href), n[t].rel = '')
             }
     }
 });
